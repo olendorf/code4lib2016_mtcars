@@ -1,0 +1,24 @@
+---
+title: "Exploring Knitr In Cars"
+author: "Robert Olendorf"
+date: "February 26, 2016"
+output: html_document
+---
+
+```{r, echo=FALSE, results='hide', warning=FALSE, message=FALSE, error=TRUE}
+if(!require("pander"))
+{
+  install.packages("pander", repos="http://cran.rstudio.com/", dependencies = TRUE)
+}
+
+library("pander", lib.loc="~/Library/R/3.2/library")
+
+```
+
+The **_mtcars_** data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). A the first few rows are shown below.
+
+```{r, mtcars-table}
+ car.data <- mtcars[, 1:8]
+ set.alignment(row.names = 'left')
+ pander(car.data, caption = "The first nine columns of mtcars")
+```
