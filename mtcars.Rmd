@@ -2,7 +2,11 @@
 title: "Exploring Knitr In Cars"
 author: "Robert Olendorf"
 date: "February 26, 2016"
-output: html_document
+output: 
+  html_document:
+    theme: readable
+    highlight: kate
+    css: custom.css
 ---
 
 ```{r, echo=FALSE, results='hide', warning=FALSE, message=FALSE, error=TRUE}
@@ -15,12 +19,31 @@ library("pander", lib.loc="~/Library/R/3.2/library")
 
 ```
 
-The **_mtcars_** data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). The data is shown below. 
+The **_mtcars_** data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). We'll use this example to explore creating research documents in Knitr. The data is shown below. 
 
 ```{r, mtcars-table}
  car.data <- mtcars[, 1:8]
  set.alignment(row.names = 'left')
  pander(car.data, caption = "The first nine columns of mtcars")
+```
+
+Starting off simply, we'll test the relationship between car weight and mileage using regression.
+
+
+```{r}
+  mtcars.regression1 <- lm(mtcars$mpg ~ mtcars$wt)
+  pander(summary(mtcars.regression1))
+
+```
+
+The results show a statistically significant relationship between mileage and car weight. For every 1000 lbs of weight the mileage drops by `r lm(mtcars$mpg ~ mtcars$wt)$coefficients[["mtcars$wt"]] * -1` miles per gallon. 
+
+The figure below shows the relationship.
+
+```{r}
+  plot(mtcars$wt, mtcars$mpg, main = "Mileage vs Weight", xlab = "Weight (1000s of pounds)", ylab = "MPG")
+  abline(mtcars.regression1, col="blue")
+
 ```
 
 
